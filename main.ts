@@ -18,5 +18,7 @@ const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 const SOURCE = new URL("./entry.png", import.meta.url);
 
 const bytes = readFileSync(SOURCE);
+if (bytes.length === 0) throw new Error("entry.png is empty, refusing to write an empty output");
 mkdirSync(OUTPUT_DIR, { recursive: true });
 writeFileSync(join(OUTPUT_DIR, "entry.png"), bytes);
+console.log(`wrote ${bytes.length} bytes to ${join(OUTPUT_DIR, "entry.png")}`);
